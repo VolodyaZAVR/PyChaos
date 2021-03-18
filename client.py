@@ -1,6 +1,7 @@
 import socket
-from main import Encoder
+from main import Encoder, Decoder
 import logging
+import sys
 
 
 class Client(socket.socket):
@@ -12,7 +13,7 @@ class Client(socket.socket):
 
     def start_client(self, filename, connection="localhost", port=9999):
         self.connect((connection, port))
-        self.send_file(filename)
+        self.listen_server(filename)
 
     def send_file(self, filename):
         with open(filename, "rb") as file:
@@ -25,13 +26,26 @@ class Client(socket.socket):
                     break
         print(f"File sent: {filename}")
 
+    def listen_server(self, filename="received.txt"):
+        with open(filename, "wb") as outfile:
+            while True:
+                data = self.recv(1024)
+                if not data:
+                    print(f"End of receiving file {outfile}.")
+                    break
+                outfile.write(data)
+
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s : %(levelname)s : %(message)s',
-    )
-    logging.debug(u"Начало программы")
-    Encoder("input.jpg")
-    Client().start_client('output.txt')
-    
+    try:
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format='%(asctime)s : %(levelname)s : %(message)s',
+        )
+        logging.debug(u"Начало программы")
+        Encoder(sys.argv[1])
+        Client().start_client('output.txt')
+        Decoder("received.txt")
+        logging.debug(u"Конец программы")
+    except:
+        print("Unexpected error:", sys.exc_info()[0])

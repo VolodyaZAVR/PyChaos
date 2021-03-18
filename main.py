@@ -1,7 +1,7 @@
 import math
 from base64 import b64encode
 from base64 import b64decode
-# import pickle
+import pickle
 from PIL import Image
 from io import BytesIO
 import binascii
@@ -74,18 +74,13 @@ class Encrypter:
 
     @staticmethod
     def write_in_file(binary, filename):
-        with open(filename, 'w') as outfile:
-            for i in range(len(binary)):
-                outfile.write(str(binary[i]))
+        with open(filename, 'wb') as outfile:
+            pickle.dump(binary, outfile)
 
     @staticmethod
     def get_from_file(filename):
-        with open(filename, 'r') as file:
-            binary = file.read()
-            temp_binary = []
-            for i in range(len(binary)):
-                temp_binary.append(int(binary[i]))
-        return temp_binary
+        with open(filename, 'rb') as file:
+            return pickle.load(file)
 
     @staticmethod
     def convert_to_data(binary):
@@ -119,19 +114,3 @@ class Decoder(Encoder):
         vector_init = vector_init[128:]
         binary_decode = self.encode_algorithm(binary_encode, key, vector_init, False)
         self.convert_to_data(binary_decode)
-
-
-Encoder('input.jpg')
-Decoder('output.txt')
-
-'''
-    @staticmethod
-    def write_in_file_pickle(binary, filename):
-        with open(filename, 'wb') as outfile:
-            pickle.dump(binary, outfile)
-    
-    @staticmethod
-    def get_from_file_pickle(filename):
-        with open(filename, 'rb') as file:
-            return pickle.load(file)
-'''

@@ -1,6 +1,5 @@
 import socket
-from main import Decoder
-import logging
+
 
 class Server(socket.socket):
     def __init__(self):
@@ -15,7 +14,7 @@ class Server(socket.socket):
         print("Server is started.")
         connection, address = self.accept()
         print("Connected: ", address)
-        self.listen_connection(connection)
+        self.send_file()
         connection.close()
         print("Connection was closed")
 
@@ -29,12 +28,17 @@ class Server(socket.socket):
                     break
                 outfile.write(data)
 
+    def send_file(self, filename="output.txt"):
+        with open(filename, "rb") as file:
+            while True:
+                # read 1024 bytes from file
+                file_data = file.read(1024)
+                # sending 1024 bytes to server
+                self.send(file_data)
+                if not file_data:
+                    break
+        print(f"File sent: {filename}")
+
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s : %(levelname)s : %(message)s',
-    )
     Server().start_server()
-    Decoder("received.txt")
-    logging.debug(u"Конец программы")
