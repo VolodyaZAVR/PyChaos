@@ -19,7 +19,7 @@ class Server(socket.socket):
         print("Connection was closed")
 
     @staticmethod
-    def listen_connection(user_connection=None, filename="received.txt"):
+    def listen_connection(user_connection=None, filename="src/received.txt"):
         with open(filename, "wb") as outfile:
             while True:
                 data = user_connection.recv(1024)
@@ -28,7 +28,7 @@ class Server(socket.socket):
                     break
                 outfile.write(data)
 
-    def send_file(self, filename="output.txt"):
+    def send_file(self, filename="src/output.txt"):
         with open(filename, "rb") as file:
             while True:
                 # read 1024 bytes from file

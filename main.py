@@ -93,7 +93,7 @@ class Encrypter:
             byte_code += binascii.unhexlify('%x' % char_to_int)
         pic_decoded = BytesIO(b64decode(byte_code))
         img_restored = Image.open(pic_decoded)
-        img_restored.save("output2.jpg")
+        img_restored.save("src/output2.jpg")
 
 
 class Encoder(Encrypter):
@@ -103,7 +103,7 @@ class Encoder(Encrypter):
         vector_init = self.generate_key(0.5, 0.5, 3, 0.5, math.pi / 2, 256)
         vector_init = vector_init[128:]
         binary_encode = self.encode_algorithm(binary, key, vector_init)
-        self.write_in_file(binary_encode, 'output.txt')
+        self.write_in_file(binary_encode, 'src/output.txt')
 
 
 class Decoder(Encoder):

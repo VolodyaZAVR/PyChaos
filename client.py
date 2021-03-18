@@ -26,7 +26,7 @@ class Client(socket.socket):
                     break
         print(f"File sent: {filename}")
 
-    def listen_server(self, filename="received.txt"):
+    def listen_server(self, filename="rsrc/eceived.txt"):
         with open(filename, "wb") as outfile:
             while True:
                 data = self.recv(1024)
@@ -44,8 +44,8 @@ if __name__ == "__main__":
         )
         logging.debug(u"Начало программы")
         Encoder(sys.argv[1])
-        Client().start_client('output.txt')
-        Decoder("received.txt")
+        Client().start_client('src/output.txt')
+        Decoder("src/received.txt")
         logging.debug(u"Конец программы")
-    except:
+    except Exception:
         print("Unexpected error:", sys.exc_info()[0])
