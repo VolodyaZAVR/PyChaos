@@ -44,7 +44,9 @@ if __name__ == "__main__":
         )
         logging.debug(u"Начало программы")
         Encoder(sys.argv[1])
+        logging.debug(u"Сервер подключается к серверу")
         Client().start_client('src/output.txt')
+        logging.debug(u"Запуск декодера")
         Decoder("src/received.txt")
         logging.debug(u"Конец программы")
     except Exception:
