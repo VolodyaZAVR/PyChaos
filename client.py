@@ -1,4 +1,6 @@
 import socket
+from main import Encoder
+import logging
 
 
 class Client(socket.socket):
@@ -8,11 +10,11 @@ class Client(socket.socket):
             socket.SOCK_STREAM
         )
 
-    def start_client(self, filename=None, connection="localhost", port=9999):
+    def start_client(self, filename, connection="localhost", port=9999):
         self.connect((connection, port))
         self.send_file(filename)
 
-    def send_file(self, filename=None):
+    def send_file(self, filename):
         with open(filename, "rb") as file:
             while True:
                 # read 1024 bytes from file
@@ -22,3 +24,14 @@ class Client(socket.socket):
                 if not file_data:
                     break
         print(f"File sent: {filename}")
+
+
+if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s : %(levelname)s : %(message)s',
+    )
+    logging.debug(u"Начало программы")
+    Encoder("input.jpg")
+    Client().start_client('output.txt')
+    

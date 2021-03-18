@@ -1,5 +1,6 @@
 import socket
-
+from main import Decoder
+import logging
 
 class Server(socket.socket):
     def __init__(self):
@@ -27,3 +28,13 @@ class Server(socket.socket):
                     print(f"End of receiving file {outfile}.")
                     break
                 outfile.write(data)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s : %(levelname)s : %(message)s',
+    )
+    Server().start_server()
+    Decoder("received.txt")
+    logging.debug(u"Конец программы")
