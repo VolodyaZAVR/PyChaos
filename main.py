@@ -104,6 +104,7 @@ class Encoder(Encrypter):
         vector_init = vector_init[128:]
         binary_encode = self.encode_algorithm(binary, key, vector_init)
         self.write_in_file(binary_encode, 'src/output.txt')
+        print("Сохранил в файл")
 
 
 class Decoder(Encoder):
