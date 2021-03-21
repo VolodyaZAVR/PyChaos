@@ -26,14 +26,14 @@ class Client(socket.socket):
                     break
         print(f"File sent: {filename}")
 
-    def listen_server(self, filename="rsrc/eceived.txt"):
+    def listen_server(self, filename="src/received.txt"):
         with open(filename, "wb") as outfile:
             while True:
                 data = self.recv(1024)
                 if not data:
-                    print(f"End of receiving file {outfile}.")
                     break
                 outfile.write(data)
+            print(f"End of receiving file {outfile}.")
 
 
 if __name__ == "__main__":
