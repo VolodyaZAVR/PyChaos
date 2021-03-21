@@ -31,9 +31,9 @@ class Client(socket.socket):
             while True:
                 data = self.recv(1024)
                 if not data:
-                    print(f"End of receiving file {outfile}.")
                     break
                 outfile.write(data)
+        print(f"End of receiving file {filename}.")
 
 
 if __name__ == "__main__":
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         logging.debug(u"Начало программы")
         Encoder(sys.argv[1])
         logging.debug(u"Сервер подключается к серверу")
-        Client().start_client('src/output.txt')
+        Client().start_client("src/received.txt")
         logging.debug(u"Запуск декодера")
         Decoder("src/received.txt")
         logging.debug(u"Конец программы")

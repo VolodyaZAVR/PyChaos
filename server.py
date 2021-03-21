@@ -15,7 +15,7 @@ class Server(socket.socket):
         print("Server is started.")
         connection, address = self.accept()
         print("Connected: ", address)
-        self.send_file()
+        self.send_file(connection)
         connection.close()
         print("Connection was closed")
 
@@ -29,13 +29,13 @@ class Server(socket.socket):
                     break
                 outfile.write(data)
 
-    def send_file(self, filename="src/output.txt"):
+    def send_file(self, user_connection=None, filename="src/output.txt"):
         with open(filename, "rb") as file:
             while True:
                 # read 1024 bytes from file
                 file_data = file.read(1024)
                 # sending 1024 bytes to server
-                self.send(file_data)
+                user_connection.send(file_data)
                 if not file_data:
                     break
         print(f"File sent: {filename}")
